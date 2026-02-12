@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QYRELLE - Classic Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --primary-light: #f5f5f0;
+            --accent-gold: #c9a961;
+            --text-gray: #666;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat Bold', sans-serif;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            padding: 60px 40px;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 60px;
+            color: var(--accent-gold);
+        }
+        
+        .nav-tabs {
+            list-style: none;
+        }
+        
+        .nav-tabs li {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInLeft 0.6s forwards;
+        }
+        
+        .nav-tabs li:nth-child(1) { animation-delay: 0.1s; }
+        .nav-tabs li:nth-child(2) { animation-delay: 0.2s; }
+        .nav-tabs li:nth-child(3) { animation-delay: 0.3s; }
+        .nav-tabs li:nth-child(4) { animation-delay: 0.4s; }
+        .nav-tabs li:nth-child(5) { animation-delay: 0.5s; }
+        .nav-tabs li:nth-child(6) { animation-delay: 0.6s; }
+        
+        .nav-tabs a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs a:hover,
+        .nav-tabs a.active {
+            color: var(--accent-gold);
+            transform: translateX(10px);
+        }
+        
+        .nav-tabs a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-tabs a:hover::after,
+        .nav-tabs a.active::after {
+            width: 40px;
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: var(--primary-dark);
+            border: none;
+            color: var(--primary-light);
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .section {
+            min-height: 100vh;
+            padding: 100px 80px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+        
+        /* Hero Section */
+        #home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8e8e0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #home::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 96px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+        
+        .cta-button {
+            margin-top: 50px;
+            padding: 18px 50px;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: 2px solid var(--primary-dark);
+            transition: all 0.3s ease;
+            display: inline-block;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* About Section */
+        #about {
+            background: white;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            line-height: 2;
+            font-size: 16px;
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+        
+        .about-content p {
+            margin-bottom: 25px;
+        }
+        
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+        
+        /* Collections Section */
+        #collections {
+            background: var(--primary-light);
+        }
+        
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .collection-card {
+            background: white;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .collection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .collection-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--text-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .collection-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .collection-card:hover .collection-image::after {
+            left: 100%;
+        }
+        
+        .collection-info {
+            padding: 30px;
+        }
+        
+        .collection-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        
+        .collection-desc {
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        
+        /* Shop Section */
+        #shop {
+            background: white;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+        
+        .product-card {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background: #f9f9f9;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s ease;
+            z-index: 1;
+        }
+        
+        .product-card:hover .product-image::before {
+            background: rgba(0,0,0,0.05);
+        }
+        
+        /* Placeholder for missing images */
+        .product-image .placeholder {
+            font-size: 64px;
+            color: #ddd;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .product-price {
+            color: var(--accent-gold);
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .add-to-cart {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--primary-dark);
+            color: var(--primary-dark);
+            cursor: pointer;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat Bold', sans-serif;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .product-card:hover .add-to-cart {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .add-to-cart:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+        
+        /* Cart Section */
+        #cart {
+            background: var(--primary-light);
+        }
+        
+        .cart-container {
+            max-width: 900px;
+        }
+        
+        .cart-items {
+            background: white;
+            padding: 40px;
+            margin-top: 40px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        
+        .cart-total {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid var(--primary-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 500;
+        }
+        
+        .checkout-button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 20px;
+            background: var(--primary-dark);
+            color: white;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat Bold', sans-serif;
+        }
+        
+        .checkout-button:hover {
+            background: var(--accent-gold);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 80px 40px;
+            color: var(--text-gray);
+        }
+        
+        /* Checkout Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 60px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-gray);
+            background: none;
+            border: none;
+        }
+        
+        .modal-close:hover {
+            color: var(--primary-dark);
+        }
+        
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .order-summary {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--primary-light);
+            border-left: 3px solid var(--accent-gold);
+        }
+        
+        .order-summary h3 {
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--text-gray);
+        }
+        
+        .order-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--primary-dark);
+        }
+        
+        /* Contact Section */
+        #contact {
+            background: white;
+        }
+        
+        .contact-content {
+            max-width: 600px;
+        }
+        
+        .contact-form {
+            margin-top: 50px;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-gray);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            background: var(--primary-light);
+            font-family: 'Montserrat Bold', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: white;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-button {
+            padding: 18px 50px;
+            background: var(--primary-dark);
+            color: white;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat Bold', sans-serif;
+        }
+        
+        .submit-button:hover {
+            background: var(--accent-gold);
+        }
+        
+        .contact-info {
+            margin-top: 60px;
+            padding: 40px;
+            background: var(--primary-light);
+            border-left: 3px solid var(--accent-gold);
+        }
+        
+        .contact-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+        
+        /* Shopping Cart Icon */
+        .cart-icon {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .cart-icon:hover {
+            background: var(--accent-gold);
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-gold);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .section {
+                padding: 80px 40px;
+            }
+            
+            .hero-title {
+                font-size: 64px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+            
+            .collections-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 40px 30px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .cart-icon {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">QYRELLE</div>
+        <ul class="nav-tabs">
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#collections" class="nav-link">Collections</a></li>
+            <li><a href="#shop" class="nav-link">Shop</a></li>
+            <li><a href="#cart" class="nav-link">Cart</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            <h2 class="modal-title">Complete Your Order</h2>
+            
+            <div class="success-message" id="successMessage">
+                Order submitted successfully! Check your email for confirmation.
+            </div>
+            
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="orderItems"></div>
+                <div class="order-total" id="orderTotal"></div>
+            </div>
+            
+            <form id="checkoutForm" class="contact-form">
+                <div class="form-group">
+                    <label for="customerName">Full Name *</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email *</label>
+                    <input type="email" id="customerEmail" name="customerEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="shippingAddress">Shipping Address: Include State & Zip Code for Correct Shipping! *</label>
+                    <textarea id="shippingAddress" name="shippingAddress" required rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method *</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">Select payment method</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="venmo">Venmo</option>
+                        <option value="zelle">Zelle</option>
+                        <option value="bank">Bank Transfer</option>
+                        <option value="cash">Cash on Delivery</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderNotes">Order Notes (Optional)</label>
+                    <textarea id="orderNotes" name="orderNotes" rows="3" placeholder="Any special instructions or questions..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Submit Order</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <h1 class="hero-title">QYRELLE</h1>
+            <p class="hero-subtitle">Classic Collection</p>
+            <a href="#shop" class="cta-button">Explore Collections</a>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title">Our Story</h2>
+            <div class="about-content">
+                <p>
+                    Welcome to <span class="highlight">QYRELLE</span>, where classic design meets timeless craftsmanship. 
+                    Founded in 2024, we believe in creating clothing that transcends trends and celebrates individual expression.
+                </p>
+                <p>
+                    Each piece in our collection is carefully curated to embody sophistication, comfort, and expression. 
+                    We work with sustainable materials and ethical production methods to ensure that style never comes at 
+                    the expense of our values.
+                </p>
+                <p>
+                    Our philosophy is simple: <span class="highlight">quality over quantity</span>. We create limited collections 
+                    that focus on exceptional design, premium fabrics, and meticulous attention to detail. Every garment tells 
+                    a story and is designed to become a lasting part of your daily wardrobe.
+                </p>
+                <p>
+                    From our qyrelle to your closet, we're committed to redefining modern elegance through pristine design 
+                    and authentic craftsmanship.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Collections Section -->
+        <section id="collections" class="section">
+            <h2 class="section-title">Our Collections</h2>
+            <div class="collections-grid">
+                <div class="collection-card">
+                    <div class="collection-image">👔</div>
+                    <div class="collection-info">
+                        <h3 class="collection-name">Essential Basics</h3>
+                        <p class="collection-desc">
+                            Timeless pieces designed for everyday elegance. Build your foundation with our carefully 
+                            crafted staples.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <div class="collection-image">👗</div>
+                    <div class="collection-info">
+                        <h3 class="collection-name">Evening Collection</h3>
+                        <p class="collection-desc">
+                            Sophisticated pieces for special moments. Elegant silhouettes that make every occasion memorable.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <div class="collection-image">🧥</div>
+                    <div class="collection-info">
+                        <h3 class="collection-name">Outerwear</h3>
+                        <p class="collection-desc">
+                            Premium jackets and coats that blend style with functionality. Perfect for every season.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Shop Section -->
+        <section id="shop" class="section">
+            <h2 class="section-title">Shop</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Cart Section -->
+        <section id="cart" class="section">
+            <h2 class="section-title">Shopping Cart</h2>
+            <div class="cart-container">
+                <div id="cartContent">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+                
+                <div class="contact-info">
+                    <h3>Visit Our Qyrelle</h3>
+                    <p><strong>Address:</strong><br>445 Nashway Street<br>New York, NY 10001</p>
+                    <p><strong>Email:</strong><br>hello@Qyrelle.com</p>
+                    <p><strong>Phone:</strong><br>+1 (888) 988-2875</p>
+                    <p><strong>Hours:</strong><br>NA: 10am - 7pm<br>24-7</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Floating Cart Icon -->
+    <div class="cart-icon" onclick="scrollToCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <script>
+        // ============================================
+        // CONFIGURATION - CHANGE THESE VALUES
+        // ============================================
+        
+        // YOUR EMAIL - Where you'll receive order notifications
+        const STORE_OWNER_EMAIL = 'jaytizzlebeats@gmail.com';  // ⚠️ CHANGE THIS!
+        
+        // ============================================
+        // PRODUCTS DATA - UPDATE YOUR PRICES HERE
+        // ============================================
+        const products = [
+            { 
+                id: 1, 
+                name: 'Premium Hoodies', 
+                price: 69,
+                image: 'images/hoodies.jpg'
+            },
+            { 
+                id: 2, 
+                name: 'Comfort Joggers', 
+                price: 69,
+                image: 'images/joggers.jpg' 
+            },
+            { 
+                id: 3, 
+                name: 'Art Posters', 
+                price: 25,
+                image: 'images/posters.jpg' 
+            },
+            { 
+                id: 4, 
+                name: 'Classic Shirts', 
+                price: 25,
+                image: 'images/shirts.jpg' 
+            },
+            { 
+                id: 5, 
+                name: 'Luxury Tracksuits', 
+                price: 120,
+                image: 'images/tracksuits.jpg' 
+            },
+        ];
+        
+        // Cart Array
+        let cart = [];
+        
+        // Populate Products
+        function populateProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">$${product.price}</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+        }
+        
+        // Add to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCart();
+            showNotification('Added to cart!');
+        }
+        
+        // Update Cart Display
+        function updateCart() {
+            const cartContent = document.getElementById('cartContent');
+            const cartCount = document.getElementById('cartCount');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="cart-items">
+                        <div class="empty-cart">
+                            <h3>Your cart is empty</h3>
+                            <p>Add some items to get started!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            cartContent.innerHTML = `
+                <div class="cart-items">
+                    ${cart.map(item => `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">$${item.price} × ${item.quantity}</div>
+                            </div>
+                            <button class="add-to-cart" onclick="removeFromCart(${item.id})">Remove</button>
+                        </div>
+                    `).join('')}
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span>$${total}</span>
+                    </div>
+                    <button class="checkout-button" onclick="openCheckout()">Place Order</button>
+                </div>
+            `;
+        }
+        
+        // Remove from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+        
+        // Open Checkout Modal
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            // Populate order summary
+            const orderItems = document.getElementById('orderItems');
+            const orderTotal = document.getElementById('orderTotal');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            orderItems.innerHTML = cart.map(item => `
+                <div class="order-item">
+                    <span>${item.name} (×${item.quantity})</span>
+                    <span>$${item.price * item.quantity}</span>
+                </div>
+            `).join('');
+            
+            orderTotal.innerHTML = `
+                <span>Total:</span>
+                <span>$${total}</span>
+            `;
+            
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+        
+        // Close Checkout Modal
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.getElementById('successMessage').classList.remove('show');
+        }
+        
+        // ============================================
+        // CHECKOUT FORM SUBMISSION - SENDS EMAILS
+        // ============================================
+        document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const customerName = document.getElementById('customerName').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const shippingAddress = document.getElementById('shippingAddress').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const orderNotes = document.getElementById('orderNotes').value;
+            
+            // Calculate total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Create order items list
+            let orderItemsList = '';
+            cart.forEach(item => {
+                orderItemsList += `${item.name} × ${item.quantity} = $${item.price * item.quantity}\n`;
+            });
+            
+            // ============================================
+            // EMAIL #1: TO STORE OWNER (YOU)
+            // ============================================
+            const ownerFormData = new FormData();
+            ownerFormData.append('_subject', '🛒 NEW ORDER - Action Required!');
+            ownerFormData.append('_template', 'table'); // Makes email look nice
+            ownerFormData.append('Customer Name', customerName);
+            ownerFormData.append('Customer Email', customerEmail);
+            ownerFormData.append('Customer Phone', customerPhone);
+            ownerFormData.append('Shipping Address', shippingAddress);
+            ownerFormData.append('Payment Method', paymentMethod);
+            ownerFormData.append('Order Items', orderItemsList);
+            ownerFormData.append('Total Amount', '$' + total);
+            ownerFormData.append('Order Notes', orderNotes || 'None');
+            ownerFormData.append('Order Date', new Date().toLocaleString());
+            
+            // ============================================
+            // EMAIL #2: TO CUSTOMER (CONFIRMATION)
+            // ============================================
+            const customerFormData = new FormData();
+            customerFormData.append('_subject', 'Order Confirmation - Thank You!');
+            customerFormData.append('_replyto', STORE_OWNER_EMAIL); // Customer can reply to you
+            customerFormData.append('_template', 'table');
+            customerFormData.append('Order Number', 'ORD-' + Date.now());
+            customerFormData.append('Total Amount', '$' + total);
+            customerFormData.append('Items Ordered', orderItemsList);
+            customerFormData.append('Shipping Address', shippingAddress);
+            customerFormData.append('Payment Method', paymentMethod);
+            customerFormData.append('Next Steps', `We'll send payment instructions to ${customerEmail} shortly. Once payment is received, we'll ship your order and send tracking info.`);
+            
+            try {
+                // Send email to store owner
+                const ownerResponse = await fetch(`https://formsubmit.co/${STORE_OWNER_EMAIL}`, {
+                    method: 'POST',
+                    body: ownerFormData
+                });
+                
+                // Send confirmation to customer
+                const customerResponse = await fetch(`https://formsubmit.co/${customerEmail}`, {
+                    method: 'POST',
+                    body: customerFormData
+                });
+                
+                if (ownerResponse.ok && customerResponse.ok) {
+                    // Show success message
+                    document.getElementById('successMessage').classList.add('show');
+                    
+                    console.log('✅ ORDER SENT:', {
+                        to_owner: STORE_OWNER_EMAIL,
+                        to_customer: customerEmail,
+                        total: '$' + total,
+                        items: cart
+                    });
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        cart = [];
+                        updateCart();
+                        document.getElementById('checkoutForm').reset();
+                        closeCheckout();
+                        
+                        alert(`Order confirmed!\n\nWe've sent a confirmation to ${customerEmail}.\n\nTotal: $${total}\n\nYou'll receive payment instructions shortly.`);
+                    }, 2000);
+                } else {
+                    throw new Error('Email sending failed');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                alert(`Error submitting order. Please try again or email us directly at ${STORE_OWNER_EMAIL}`);
+            }
+        });
+        
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 120px;
+                right: 40px;
+                background: #c9a961;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 5px;
+                z-index: 1000;
+                animation: fadeIn 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        }
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Close mobile menu
+                    if (window.innerWidth <= 968) {
+                        document.getElementById('sidebar').classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // Scroll to Cart
+        function scrollToCart() {
+            document.querySelector('#cart').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+        
+        // Handle Contact Form
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            console.log('CONTACT FORM:', { name, email, message });
+            
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            event.target.reset();
+        }
+        
+        // Highlight active section on scroll
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Initialize
+        populateProducts();
+        updateCart();
+    </script>
+</body>
+</html>
